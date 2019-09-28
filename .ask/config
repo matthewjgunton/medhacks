@@ -1,9 +1,33 @@
 {
   "deploy_settings": {
-    "default": {
-      "skill_id": "",
+    "matman": {
+      "skill_id": "amzn1.ask.skill.bed7f3d1-fb48-426b-a472-dbd7930c6c6f",
       "was_cloned": false,
-      "merge": {}
+      "merge": {},
+      "resources": {
+        "manifest": {
+          "eTag": "62ef7d4e380583231514e37a50aee1d2"
+        },
+        "interactionModel": {
+          "en-US": {
+            "eTag": "30bfb3706b97e03e5bb921c5e79b0b44"
+          }
+        },
+        "lambda": [
+          {
+            "alexaUsage": [
+              "custom/default"
+            ],
+            "arn": "arn:aws:lambda:us-east-1:962029759400:function:ask-custom-medHacks-matman",
+            "awsRegion": "us-east-1",
+            "codeUri": "lambda/custom",
+            "functionName": "ask-custom-medHacks-matman",
+            "handler": "index.handler",
+            "revisionId": "194ddc78-0955-4c94-ad87-a6bb2a2ad2bf",
+            "runtime": "nodejs8.10"
+          }
+        ]
+      }
     }
   }
 }

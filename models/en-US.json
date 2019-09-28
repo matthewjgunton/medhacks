@@ -16,16 +16,112 @@
                   "samples": []
               },
               {
-                  "name": "HelloWorldIntent",
-                  "slots": [],
+                  "name": "BloodPressureIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
                   "samples": [
-                      "hello",
-                      "how are you",
-                      "say hi world",
-                      "say hi",
-                      "hi",
-                      "say hello world",
-                      "say hello"
+                    "The blood pressure is {mui}",
+                    "Blood pressure is {mui}",
+                    "Blood pressure {mui}",
+                    "The patients blood pressure is {mui}",
+                    "patients blood pressure is {mui}"
+                  ]
+              },
+              {
+                  "name": "OxygenLevelIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The pulse oximeter is {mui}",
+                    "Pulse is {mui}",
+                    "Pulse {mui}",
+                    "{mui} pulse oximeter",
+                    "{mui} pulse",
+                    "{mui} oxygen level",
+                    "{mui} oxygen"
+                  ]
+              },
+              {
+                  "name": "HeartRateIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The pulse is {mui}",
+                    "Pulse is {mui}",
+                    "Pulse {mui}",
+                    "{mui} pulse",
+                    "{mui} pulse level"
+                  ]
+              },
+              {
+                  "name": "ComfortLevelIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The patient level of comfort is {mui}",
+                    "Patient level of comfort is {mui}",
+                    "Patient level of comfort {mui}",
+                    "The Comfort level is {mui}"
+
+
+                  ]
+              },
+              {
+                  "name": "NauseaIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The Level of nausea is {mui}",
+                    "Level of nausea is {mui}",
+                    "Level of nausea {mui}"
+                  ]
+              },
+              {
+                  "name": "BreathingIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The throat level is {mui}",
+                    "throat level is {mui}",
+                    "Throat level {mui}"
+                  ]
+              },
+              {
+                  "name": "BleedingIntent",
+                  "slots": [
+                    {
+                        "name": "mui",
+                        "type": "ONETOTEN"
+                    }
+                  ],
+                  "samples": [
+                    "The level of Vaginal bleeding is {mui}",
+                    "Level of Vaginal bleeding is {mui}",
+                    "Level of vaginal bleeding {mui}"
                   ]
               },
               {
@@ -33,7 +129,63 @@
                   "samples": []
               }
           ],
-          "types": []
+          "types": [
+            {
+                "name": "ONETOTEN",
+                "values": [
+                  {
+                      "name": {
+                          "value": 1
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 2
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 3
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 4
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 5
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 6
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 7
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 8
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 9
+                      }
+                  },
+                  {
+                      "name": {
+                          "value": 10
+                      }
+                  }
+                ]
+            }
+          ]
       }
   }
 }

@@ -1,33 +1,212 @@
-// This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK (v2).
-// Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
-// session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
+        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
+        const speakOutput = 'Welcome, what is the blood pressure?';
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+
+        attributes.stage = 0;
+
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
             .getResponse();
     }
 };
-const HelloWorldIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'HelloWorldIntent';
+
+const bloodPressureHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "BloodPressureIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 0;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.bloodPressure = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    let speakOutput = "Got it. What is the patient's oxygen rate.";
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+//heart rate
+//oxygen level (What's the patient comfort level)
+
+const oxygenLevelHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "OxygenLevelIntent" ) &&
+          request.type === 'IntentRequest' && attributes.stage == 1;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.oxygenLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    let speakOutput = "Got it. What is the patient's heart rate.";
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+const heartRateHandler = {
+    canHandle(handlerInput){
+      const attributes = handlerInput.attributesManager.getSessionAttributes();
+      const request = handlerInput.requestEnvelope.request;
+
+      return (request.intent.name === "HeartRateIntent") &&
+            request.type === 'IntentRequest' && attributes.stage == 2;
     },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!';
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse();
+    handle(handlerInput){
+      const attributes = handlerInput.attributesManager.getSessionAttributes();
+      const response = handlerInput.responseBuilder;
+
+      //initializing attributes vars
+      attributes.stage = 1;
+      attributes.heartRate = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+
+      let speakOutput = "Got it. How is the patient's comfort level on a scale of 1-10? 1 = very poor, 10 = excellent";
+
+      return response.speak(speakOutput)
+                    .reprompt(speakOutput)
+                    .getResponse();
     }
-};
+}
+
+const comfortLevelHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "ComfortLevelIntent" ) &&
+          request.type === 'IntentRequest' && attributes.stage == 2;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.comfortLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    let speakOutput = "Got it. What is the patient's level of nausea?";
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+const nauseaHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "NauseaIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 0;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.nausea = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    let speakOutput = "Got it. What is the patient's breathing like?";
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+const breathingHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "BreathingIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 0;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.breathing = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    let speakOutput = "Got it. What is the patient's vaginal bleeding like?";
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+const bleedingHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "BleedingIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 0;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    attributes.stage++;
+    attributes.bleeding = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+
+    ////////////
+    //calculation stage
+    let speakOutput;
+    let shouldSkip = false;
+    let arr = Object.keys(attributes);
+    for(int i = 0; i < arr; i++){
+      if(attributes.arr[i] == null){
+        shouldSkip = true;
+        speakOutput = "User did not give all the proper metrics. Please try again";
+      }
+    }
+    ////////////
+    if(!shouldSkip){
+        speakOutput = "You're cured!";
+    }
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+
+
+//////////////
+
 const HelpIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -113,7 +292,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
-        ) 
+        )
     .addErrorHandlers(
         ErrorHandler,
         )

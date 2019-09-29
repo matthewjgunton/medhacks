@@ -24,6 +24,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The blood pressure is {mui}",
                     "Blood pressure is {mui}",
                     "Blood pressure {mui}",
@@ -40,6 +41,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The pulse oximeter is {mui}",
                     "Pulse is {mui}",
                     "Pulse {mui}",
@@ -58,6 +60,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The pulse is {mui}",
                     "Pulse is {mui}",
                     "Pulse {mui}",
@@ -74,6 +77,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The patient level of comfort is {mui}",
                     "Patient level of comfort is {mui}",
                     "Patient level of comfort {mui}",
@@ -91,6 +95,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The Level of nausea is {mui}",
                     "Level of nausea is {mui}",
                     "Level of nausea {mui}"
@@ -105,6 +110,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The throat level is {mui}",
                     "throat level is {mui}",
                     "Throat level {mui}"
@@ -119,6 +125,7 @@
                     }
                   ],
                   "samples": [
+                    "{mui}",
                     "The level of Vaginal bleeding is {mui}",
                     "Level of Vaginal bleeding is {mui}",
                     "Level of vaginal bleeding {mui}"

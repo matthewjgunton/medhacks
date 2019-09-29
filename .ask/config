@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-medHacks-matman",
             "handler": "index.handler",
-            "revisionId": "516160e5-d3c1-402f-8303-85926715361c",
+            "revisionId": "02b3057d-6748-46a7-9d35-debde494419b",
             "runtime": "nodejs8.10"
           }
         ]

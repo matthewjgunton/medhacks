@@ -5,7 +5,7 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, what is the blood pressure?';
+        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted. What is the blood pressure?';
         const attributes = handlerInput.attributesManager.getSessionAttributes();
 
         attributes.stage = 0;
@@ -34,13 +34,11 @@ const bloodPressureHandler = {
     let speakOutput;
     if(isNumber(num)){
       attributes.stage++;
-      attributes.oxygenLevel = num;
-      speakOutput = "Got it. What is the patient's oxygen rate.";
+      attributes.bloodPressure = num;
+      speakOutput = "Next question: What is the patient's oxygen level?";
     }else{
       speakOutput = "Please enter a number for blood pressure";
     }
-
-    let speakOutput = "Got it. What is the patient's oxygen rate.";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -64,18 +62,15 @@ const oxygenLevelHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
     if(isNumber(num)){
       attributes.stage++;
       attributes.oxygenLevel = num;
-      speakOutput = "Got it. What is the patient's heart rate.";
+      speakOutput = "Next question: What is the patient's heart rate?";
     }else{
       speakOutput = "Please enter a number for oxygen level";
     }
-
-
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -95,12 +90,15 @@ const heartRateHandler = {
       const attributes = handlerInput.attributesManager.getSessionAttributes();
       const response = handlerInput.responseBuilder;
 
-      //initializing attributes vars
-      attributes.stage++;
-      attributes.heartRate = handlerInput.requestEnvelope.request.intent.slots.mui.value;
-
-
-      let speakOutput = "Got it. How is the patient's comfort level on a scale of 1-10? 1 = very poor, 10 = excellent";
+      let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+      let speakOutput;
+      if(isNumber(num)){
+        attributes.stage++;
+        attributes.heartRate = num;
+        speakOutput = "Next question: What is the patient's pain level on a scale of 0 to 10? 0 equals no pain, 10 equals severe pain";
+      }else{
+        speakOutput = "Please enter a number for oxygen level";
+      }
 
       return response.speak(speakOutput)
                     .reprompt(speakOutput)
@@ -121,10 +119,15 @@ const comfortLevelHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
-    attributes.comfortLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
-
-    let speakOutput = "Got it. What is the patient's level of nausea?";
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.comfortLevel = num;
+      speakOutput = "Next question: What is the patient's nausea level on a scale of 0 to 10? 0 equals no nausea, 10 equals severe vomitting";
+    }else{
+      speakOutput = "Please enter a number for oxygen level";
+    }
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -145,10 +148,15 @@ const nauseaHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
-    attributes.nausea = handlerInput.requestEnvelope.request.intent.slots.mui.value;
-
-    let speakOutput = "Got it. What is the patient's breathing like?";
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.nausea = num;
+      speakOutput = "Next question: Is the patient experiencing pain associated with breathing? 0 equals no pain, 10 equals severe pain while breathing";
+    }else{
+      speakOutput = "Please enter a number for oxygen level";
+    }
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -169,10 +177,15 @@ const breathingHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
-    attributes.breathing = handlerInput.requestEnvelope.request.intent.slots.mui.value;
-
-    let speakOutput = "Got it. What is the patient's vaginal bleeding like?";
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.breathing = num;
+      speakOutput = "Final question: Is the patient experiencing vaginal bleeding? Responses include none, light, medium, or heavy.";
+    }else{
+      speakOutput = "Please enter a number for oxygen level";
+    }
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -193,11 +206,20 @@ const bleedingHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.bleeding = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.bleeding = num;
+    }else{
+      speakOutput = "Please enter a number for oxygen level";
+      return response.speak(speakOutput)
+                    .reprompt(speakOutput)
+                    .getResponse();
+    }
 
     ////////////
     //calculation stage
-    let speakOutput;
     let shouldSkip = false;
     let arr = Object.keys(attributes);
     for(let i = 0; i < arr; i++){

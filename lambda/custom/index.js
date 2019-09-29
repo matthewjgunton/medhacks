@@ -5,7 +5,7 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted. What is the blood pressure?';
+        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted. What is the systolic blood pressure?';
         const attributes = handlerInput.attributesManager.getSessionAttributes();
 
         attributes.stage = 0;
@@ -17,7 +17,7 @@ const LaunchRequestHandler = {
     }
 };
 
-const bloodPressureHandler = {
+const bloodPressureSystolicHandler = {
   canHandle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
@@ -32,9 +32,38 @@ const bloodPressureHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) ){
       attributes.stage++;
       attributes.bloodPressure = num;
+      speakOutput = "Next question: What is the patient's diastolic blood pressure?";
+    }else{
+      speakOutput = "Please enter a number for blood pressure";
+    }
+
+    return response.speak(speakOutput)
+                  .reprompt(speakOutput)
+                  .getResponse();
+  }
+}
+
+const bloodPressureDiastolicHandler = {
+  canHandle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const request = handlerInput.requestEnvelope.request;
+
+    return (request.intent.name === "NumberIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 1;
+  },
+  handle(handlerInput){
+    const attributes = handlerInput.attributesManager.getSessionAttributes();
+    const response = handlerInput.responseBuilder;
+
+    //initializing attributes vars
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.bloodPressureTwo = num;
       speakOutput = "Next question: What is the patient's oxygen level?";
     }else{
       speakOutput = "Please enter a number for blood pressure";
@@ -55,7 +84,7 @@ const oxygenLevelHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "NumberIntent" ) &&
-          request.type === 'IntentRequest' && attributes.stage == 1;
+          request.type === 'IntentRequest' && attributes.stage == 2;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -64,12 +93,12 @@ const oxygenLevelHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num >= 0 && num <= 100) ){
       attributes.stage++;
       attributes.oxygenLevel = num;
       speakOutput = "Next question: What is the patient's heart rate?";
     }else{
-      speakOutput = "Please enter a number for oxygen level";
+      speakOutput = "Please enter a number from 1 to 100 for oxygen level";
     }
 
     return response.speak(speakOutput)
@@ -84,7 +113,7 @@ const heartRateHandler = {
       const request = handlerInput.requestEnvelope.request;
 
       return (request.intent.name === "NumberIntent") &&
-            request.type === 'IntentRequest' && attributes.stage == 2;
+            request.type === 'IntentRequest' && attributes.stage == 3;
     },
     handle(handlerInput){
       const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -97,7 +126,7 @@ const heartRateHandler = {
         attributes.heartRate = num;
         speakOutput = "Next question: What is the patient's pain level on a scale of 0 to 10? 0 equals no pain, 10 equals severe pain";
       }else{
-        speakOutput = "Please enter a number for oxygen level";
+        speakOutput = "Please enter a number for heart rate";
       }
 
       return response.speak(speakOutput)
@@ -112,7 +141,7 @@ const comfortLevelHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "NumberIntent" ) &&
-          request.type === 'IntentRequest' && attributes.stage == 3;
+          request.type === 'IntentRequest' && attributes.stage == 4;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -121,12 +150,12 @@ const comfortLevelHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num >= 1 && num <= 10) ){
       attributes.stage++;
       attributes.comfortLevel = num;
       speakOutput = "Next question: What is the patient's nausea level on a scale of 0 to 10? 0 equals no nausea, 10 equals severe vomitting";
     }else{
-      speakOutput = "Please enter a number for oxygen level";
+      speakOutput = "Please enter a number from 1 to 10 for comfort level";
     }
 
     return response.speak(speakOutput)
@@ -141,7 +170,7 @@ const nauseaHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "NumberIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 4;
+          request.type === 'IntentRequest' && attributes.stage == 5;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -150,12 +179,12 @@ const nauseaHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num >= 1 && num <= 10) ){
       attributes.stage++;
       attributes.nausea = num;
       speakOutput = "Next question: Is the patient experiencing pain associated with breathing? 0 equals no pain, 10 equals severe pain while breathing";
     }else{
-      speakOutput = "Please enter a number for oxygen level";
+      speakOutput = "Please enter a number from 1 to 10 for nausea";
     }
 
     return response.speak(speakOutput)
@@ -170,7 +199,7 @@ const breathingHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "NumberIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 5;
+          request.type === 'IntentRequest' && attributes.stage == 6;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -179,12 +208,12 @@ const breathingHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num >= 1 && num <= 10)){
       attributes.stage++;
       attributes.breathing = num;
       speakOutput = "Final question: Is the patient experiencing vaginal bleeding? Responses include none, light, medium, or heavy.";
     }else{
-      speakOutput = "Please enter a number for oxygen level";
+      speakOutput = "Please enter a number from 1 to 10 for breathing";
     }
 
     return response.speak(speakOutput)
@@ -199,7 +228,7 @@ const bleedingHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "NumberIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 6;
+          request.type === 'IntentRequest' && attributes.stage == 7;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -208,11 +237,11 @@ const bleedingHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num >= 1 && num <= 10)){
       attributes.stage++;
       attributes.bleeding = num;
     }else{
-      speakOutput = "Please enter a number for oxygen level";
+      speakOutput = "Please enter a number from 1 to 10 for bleeding";
       return response.speak(speakOutput)
                     .reprompt(speakOutput)
                     .getResponse();
@@ -334,7 +363,8 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        bloodPressureHandler,
+        bloodPressureSystolicHandler,
+        bloodPressureDiastolicHandler,
         oxygenLevelHandler,
         heartRateHandler,
         comfortLevelHandler,

@@ -35,7 +35,7 @@ const bloodPressureSystolicHandler = {
     if(isNumber(num) && (num > 70 && num < 200)){ //out of realistic range, invalid
       attributes.stage++;
       attributes.bloodPressureSys = num;
-      speakOutput = "Next question: What is the patient's diastolic blood pressure?"; 
+      speakOutput = "Next question: What is the patient's diastolic blood pressure?";
     }else{
       speakOutput = "Please say a valid integer for systolic blood pressure.";
     }
@@ -256,10 +256,10 @@ const bleedingHandler = {
       }
     }
 
-    int acc = 0; //accumulator for figuring out if nurse should be contacted
+    let acc = 0; //accumulator for figuring out if nurse should be contacted
 
     //Calculation for Systolic Blood Pressure:
-    int x = attributes.bloodPressureSys;
+    let x = attributes.bloodPressureSys;
     switch(true) {
       case (x < 90):
         acc+=3;
@@ -273,7 +273,7 @@ const bleedingHandler = {
         acc+=2;
         break;
     }
-    
+
     //Calculation for Diastolic Blood Pressure:
     x = attributes.bloodPressureDia;
     switch(true) {
@@ -331,7 +331,7 @@ const bleedingHandler = {
         acc+=3;
         break;
     }
-    
+
     //Calculation for Trouble Breathing
     x = attributes.breathing;
     switch(true) {
@@ -344,7 +344,7 @@ const bleedingHandler = {
         acc+=3;
         break;
     }
-    
+
     //Calculation for Nausea
     x = attributes.nausea;
     switch(true) {
@@ -371,7 +371,7 @@ const bleedingHandler = {
     }
 
     //OUTCOMES
-    if(acc<2) speakOutput = "The patient is of low concern. Immediate attention is not required."; 
+    if(acc<2) speakOutput = "The patient is of low concern. Immediate attention is not required.";
     else if(acc == 2) speakOutput = "The patient is of medium concern. Text nurse with symptoms and monitor closely."; //Future version would notify the nurse through WhatsApp to come to the patient when available
     else speakOutput = "The patient is of high concern. Call nurse immediately for assistance."; //Future version would automatically call nurse with WhatsApp
 

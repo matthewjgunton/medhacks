@@ -30,8 +30,15 @@ const bloodPressureHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
-    attributes.bloodPressure = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.oxygenLevel = num;
+      speakOutput = "Got it. What is the patient's oxygen rate.";
+    }else{
+      speakOutput = "Please enter a number for blood pressure";
+    }
 
     let speakOutput = "Got it. What is the patient's oxygen rate.";
 
@@ -57,10 +64,18 @@ const oxygenLevelHandler = {
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
-    attributes.oxygenLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's heart rate.";
+    let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
+    let speakOutput;
+    if(isNumber(num)){
+      attributes.stage++;
+      attributes.oxygenLevel = num;
+      speakOutput = "Got it. What is the patient's heart rate.";
+    }else{
+      speakOutput = "Please enter a number for oxygen level";
+    }
+
+
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -202,6 +217,17 @@ const bleedingHandler = {
   }
 }
 
+
+function isNumber(potentialNum){
+
+  for(let i = 0; i < potentialNum.length; i++){
+    if (!potentialNum[i].match(/[0-9]/)){
+      return false;
+    }
+  }
+  return true;
+
+}
 
 
 //////////////

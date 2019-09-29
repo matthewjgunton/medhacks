@@ -10,7 +10,7 @@
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "ace4043b9b3f6a2823571c2aa7146f71"
+            "eTag": "48444654b5ed3521e7ae1be1777407a6"
           }
         },
         "lambda": [
@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-medHacks-matman",
             "handler": "index.handler",
-            "revisionId": "eca38bb1-65a1-4536-aab6-26190ebf1c62",
+            "revisionId": "1ba33bdf-6099-4ba6-ab65-9ef7afe5008e",
             "runtime": "nodejs8.10"
           }
         ]

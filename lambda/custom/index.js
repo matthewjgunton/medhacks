@@ -22,7 +22,7 @@ const bloodPressureHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "BloodPressureIntent") &&
+    return (request.intent.name === "NumberIntent") &&
           request.type === 'IntentRequest' && attributes.stage == 0;
   },
   handle(handlerInput){
@@ -49,7 +49,7 @@ const oxygenLevelHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "OxygenLevelIntent" ) &&
+    return (request.intent.name === "NumberIntent" ) &&
           request.type === 'IntentRequest' && attributes.stage == 1;
   },
   handle(handlerInput){
@@ -73,7 +73,7 @@ const heartRateHandler = {
       const attributes = handlerInput.attributesManager.getSessionAttributes();
       const request = handlerInput.requestEnvelope.request;
 
-      return (request.intent.name === "HeartRateIntent") &&
+      return (request.intent.name === "NumberIntent") &&
             request.type === 'IntentRequest' && attributes.stage == 2;
     },
     handle(handlerInput){
@@ -81,7 +81,7 @@ const heartRateHandler = {
       const response = handlerInput.responseBuilder;
 
       //initializing attributes vars
-      attributes.stage = 1;
+      attributes.stage++;
       attributes.heartRate = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
 
@@ -98,7 +98,7 @@ const comfortLevelHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "ComfortLevelIntent" ) &&
+    return (request.intent.name === "NumberIntent" ) &&
           request.type === 'IntentRequest' && attributes.stage == 3;
   },
   handle(handlerInput){
@@ -122,7 +122,7 @@ const nauseaHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "NauseaIntent") &&
+    return (request.intent.name === "NumberIntent") &&
           request.type === 'IntentRequest' && attributes.stage == 4;
   },
   handle(handlerInput){
@@ -146,7 +146,7 @@ const breathingHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "BreathingIntent") &&
+    return (request.intent.name === "NumberIntent") &&
           request.type === 'IntentRequest' && attributes.stage == 5;
   },
   handle(handlerInput){
@@ -170,7 +170,7 @@ const bleedingHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "BleedingIntent") &&
+    return (request.intent.name === "NumberIntent") &&
           request.type === 'IntentRequest' && attributes.stage == 6;
   },
   handle(handlerInput){

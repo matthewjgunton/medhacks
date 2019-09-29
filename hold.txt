@@ -1,0 +1,109 @@
+{
+    "name": "BloodPressureIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The blood pressure is {mui}",
+      "Blood pressure is {mui}",
+      "Blood pressure {mui}",
+      "The patients blood pressure is {mui}",
+      "patients blood pressure is {mui}"
+    ]
+},
+{
+    "name": "OxygenLevelIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The pulse oximeter is {mui}",
+      "Pulse is {mui}",
+      "Pulse {mui}",
+      "pulse oximeter",
+      "pulse",
+      "oxygen level",
+      "oxygen"
+    ]
+},
+{
+    "name": "HeartRateIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The pulse is {mui}",
+      "Pulse is {mui}",
+      "Pulse {mui}",
+      "{mui} pulse",
+      "{mui} pulse level"
+    ]
+},
+{
+    "name": "ComfortLevelIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The patient level of comfort is {mui}",
+      "Patient level of comfort is {mui}",
+      "Patient level of comfort {mui}",
+      "The Comfort level is {mui}"
+
+
+    ]
+},
+{
+    "name": "NauseaIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The Level of nausea is {mui}",
+      "Level of nausea is {mui}",
+      "Level of nausea {mui}"
+    ]
+},
+{
+    "name": "BreathingIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The throat level is {mui}",
+      "throat level is {mui}",
+      "Throat level {mui}"
+    ]
+},
+{
+    "name": "BleedingIntent",
+    "slots": [
+      {
+          "name": "mui",
+          "type": "AMAZON.NUMBER"
+      }
+    ],
+    "samples": [
+      "The level of Vaginal bleeding is {mui}",
+      "Level of Vaginal bleeding is {mui}",
+      "Level of vaginal bleeding {mui}"
+    ]
+},

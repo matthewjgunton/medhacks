@@ -248,7 +248,7 @@ const bleedingHandler = {
     }
 
     ////////////
-    //calculation stage
+    //calculation stage- check for null
     let shouldSkip = false;
     let arr = Object.keys(attributes);
     for(let i = 0; i < arr; i++){
@@ -258,9 +258,126 @@ const bleedingHandler = {
       }
     }
     ////////////
-    if(!shouldSkip){
+    /*if(!shouldSkip){
         speakOutput = "You're cured!";
+    }*/
+    int acc = 0; //accumulator for figuring out if nurse should be contacted
+
+    //Calculation for Systolic Blood Pressure:
+    int x = attributes.bloodPressure;
+    switch(true) {
+      case (x < 90):
+        acc+=3;
+        break;
+      case (x >= 90 && x < 140):
+        break;
+      case (x >= 140 && x < 160):
+        acc+=2;
+        break;
+      case (x >= 160):
+        acc+=2;
+        break;
     }
+    
+    //Calculation for Diastolic Blood Pressure:
+    x = attributes.bloodPressureTwo;
+    switch(true) {
+      case (x < 60):
+        acc+=3;
+        break;
+      case (x >= 60 && x < 90):
+        break;
+      case (x >= 90 && x < 110):
+        acc+=2;
+        break;
+      case(x >= 110):
+        acc+=3;
+        break;
+    }
+
+    //Calculation for Oxygen Saturation
+    x = attributes.breathing;
+    switch(true) {
+      case (x>=95):
+        break;
+      case (x<95 && x>=90):
+        acc+=2;
+        break;
+      case(x<90):
+        acc+=3;
+        break;
+    }
+
+    //Calculation for Pulse
+    x = attributes.heartRate;
+    switch(true) {
+      case (x<60):
+        acc+=3;
+        break;
+      case(x>=60 && x<100):
+        break;
+      case(x>100 && x<120):
+        acc+=2;
+        break;
+      case (x>=120):
+        acc+=3;
+        break;
+    }
+
+    //Calculation for Vaginal Bleeding
+    x = attributes.bleeding;
+    switch(true) {
+      case (x<=4):
+        break;
+      case(x>4 && x<=7):
+        acc+=2;
+        break;
+      case(x>7 && x<=10):
+        acc+=3;
+        break;
+    }
+    
+    //Calculation for Trouble Breathing
+    x = attributes.breathing;
+    switch(true) {
+      case (x<=4):
+        break;
+      case(x>4 && x<=7):
+        acc+=2;
+        break;
+      case(x>7 && x<=10):
+        acc+=3;
+        break;
+    }
+    
+    //Calculation for Nausea
+    x = attributes.nausea;
+    switch(true) {
+      case (x<=4):
+        break;
+      case(x>4 && x<=7):
+        acc+=2;
+        break;
+      case(x>7 && x<=10):
+        acc+=3;
+        break;
+    }
+
+    //Calculation for General Pain/Well Being
+    switch(true) {
+      case (x<=4):
+        break;
+      case(x>4 && x<=7):
+        acc+=2;
+        break;
+      case(x>7 && x<=10):
+        acc+=3;
+        break;
+    }
+
+    if(acc<2) speakOutput = "No concerns."
+    else if(acc == 2) speakOutput = "Text nurse.";
+    else speakOutput = "Call nurse.";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)

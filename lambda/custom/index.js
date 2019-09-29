@@ -5,7 +5,7 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, what is the blood pressure?';
+        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted. What is the blood pressure?';
         const attributes = handlerInput.attributesManager.getSessionAttributes();
 
         attributes.stage = 0;
@@ -33,7 +33,7 @@ const bloodPressureHandler = {
     attributes.stage++;
     attributes.bloodPressure = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's oxygen rate.";
+    let speakOutput = "Next question: What is the patient's oxygen level?";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -60,7 +60,7 @@ const oxygenLevelHandler = {
     attributes.stage++;
     attributes.oxygenLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's heart rate.";
+    let speakOutput = "Next question: What is the patient's heart rate?";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -85,7 +85,7 @@ const heartRateHandler = {
       attributes.heartRate = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
 
-      let speakOutput = "Got it. How is the patient's comfort level on a scale of 1-10? 1 = very poor, 10 = excellent";
+      let speakOutput = "Next question: What is the patient's pain level on a scale of 0 to 10? 0 equals no pain, 10 equals severe pain";
 
       return response.speak(speakOutput)
                     .reprompt(speakOutput)
@@ -109,7 +109,7 @@ const comfortLevelHandler = {
     attributes.stage++;
     attributes.comfortLevel = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's level of nausea?";
+    let speakOutput = "Next question: What is the patient's nausea level on a scale of 0 to 10? 0 equals no nausea, 10 equals severe vomitting";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -133,7 +133,7 @@ const nauseaHandler = {
     attributes.stage++;
     attributes.nausea = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's breathing like?";
+    let speakOutput = "Next question: Is the patient experiencing pain associated with breathing? 0 equals no pain, 10 equals severe pain while breathing";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -157,7 +157,7 @@ const breathingHandler = {
     attributes.stage++;
     attributes.breathing = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
-    let speakOutput = "Got it. What is the patient's vaginal bleeding like?";
+    let speakOutput = "Final question: Is the patient experiencing vaginal bleeding? Responses include none, light, medium, or heavy.";
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)

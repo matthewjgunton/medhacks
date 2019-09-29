@@ -99,7 +99,7 @@ const comfortLevelHandler = {
     const request = handlerInput.requestEnvelope.request;
 
     return (request.intent.name === "ComfortLevelIntent" ) &&
-          request.type === 'IntentRequest' && attributes.stage == 2;
+          request.type === 'IntentRequest' && attributes.stage == 3;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -122,8 +122,8 @@ const nauseaHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "NauseaIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 0;
+    return (request.intent.name === "NauseaIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 4;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -146,8 +146,8 @@ const breathingHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "BreathingIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 0;
+    return (request.intent.name === "BreathingIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 5;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
@@ -170,15 +170,14 @@ const bleedingHandler = {
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const request = handlerInput.requestEnvelope.request;
 
-    return (request.intent.name === "BleedingIntent" || request.intent.name === "AMAZON.StartOverIntent") &&
-          request.type === 'IntentRequest' && attributes.stage == 0;
+    return (request.intent.name === "BleedingIntent") &&
+          request.type === 'IntentRequest' && attributes.stage == 6;
   },
   handle(handlerInput){
     const attributes = handlerInput.attributesManager.getSessionAttributes();
     const response = handlerInput.responseBuilder;
 
     //initializing attributes vars
-    attributes.stage++;
     attributes.bleeding = handlerInput.requestEnvelope.request.intent.slots.mui.value;
 
     ////////////
@@ -186,7 +185,7 @@ const bleedingHandler = {
     let speakOutput;
     let shouldSkip = false;
     let arr = Object.keys(attributes);
-    for(int i = 0; i < arr; i++){
+    for(let i = 0; i < arr; i++){
       if(attributes.arr[i] == null){
         shouldSkip = true;
         speakOutput = "User did not give all the proper metrics. Please try again";
@@ -287,7 +286,13 @@ const ErrorHandler = {
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
-        HelloWorldIntentHandler,
+        bloodPressureHandler,
+        oxygenLevelHandler,
+        heartRateHandler,
+        comfortLevelHandler,
+        nauseaHandler,
+        breathingHandler,
+        bleedingHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,

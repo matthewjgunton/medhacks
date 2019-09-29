@@ -6,11 +6,11 @@
       "merge": {},
       "resources": {
         "manifest": {
-          "eTag": "62ef7d4e380583231514e37a50aee1d2"
+          "eTag": "ed0dc7c12cf4bbdf6bbf5f34694fb4fa"
         },
         "interactionModel": {
           "en-US": {
-            "eTag": "30bfb3706b97e03e5bb921c5e79b0b44"
+            "eTag": "ace4043b9b3f6a2823571c2aa7146f71"
           }
         },
         "lambda": [
@@ -23,7 +23,7 @@
             "codeUri": "lambda/custom",
             "functionName": "ask-custom-medHacks-matman",
             "handler": "index.handler",
-            "revisionId": "194ddc78-0955-4c94-ad87-a6bb2a2ad2bf",
+            "revisionId": "a85fd5bb-2fb1-44f8-a439-29fe17802181",
             "runtime": "nodejs8.10"
           }
         ]

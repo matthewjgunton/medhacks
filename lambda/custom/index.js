@@ -1,11 +1,11 @@
 const Alexa = require('ask-sdk-core');
 
-const LaunchRequestHandler = {
+const LaunchRequestHandler = { //Launches application
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted. What is the systolic blood pressure?';
+        const speakOutput = 'Welcome to AideSquared. Please answer the following questions as prompted to assess patient risk. What is the systolic blood pressure?';
         const attributes = handlerInput.attributesManager.getSessionAttributes();
 
         attributes.stage = 0;
@@ -32,12 +32,12 @@ const bloodPressureSystolicHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) ){
+    if(isNumber(num) && (num > 70 && num < 200)){ //out of realistic range, invalid
       attributes.stage++;
-      attributes.bloodPressure = num;
-      speakOutput = "Next question: What is the patient's diastolic blood pressure?";
+      attributes.bloodPressureSys = num;
+      speakOutput = "Next question: What is the patient's diastolic blood pressure?"; 
     }else{
-      speakOutput = "Please enter a number for blood pressure";
+      speakOutput = "Please say a valid integer for systolic blood pressure.";
     }
 
     return response.speak(speakOutput)
@@ -61,12 +61,12 @@ const bloodPressureDiastolicHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num)){
+    if(isNumber(num) && (num > 40 && num < 130)){ //out of realistic range, invalid
       attributes.stage++;
-      attributes.bloodPressureTwo = num;
-      speakOutput = "Next question: What is the patient's oxygen level?";
+      attributes.bloodPressureDia = num;
+      speakOutput = "Next question: What is the patient's blood oxygen level?";
     }else{
-      speakOutput = "Please enter a number for blood pressure";
+      speakOutput = "Please say a valid integer for diastolic blood pressure.";
     }
 
     return response.speak(speakOutput)
@@ -74,9 +74,6 @@ const bloodPressureDiastolicHandler = {
                   .getResponse();
   }
 }
-
-//heart rate
-//oxygen level (What's the patient comfort level)
 
 const oxygenLevelHandler = {
   canHandle(handlerInput){
@@ -93,12 +90,12 @@ const oxygenLevelHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) && (num >= 0 && num <= 100) ){
+    if(isNumber(num) && (num >= 0 && num <= 100) ){ //out of realistic range, invalid
       attributes.stage++;
       attributes.oxygenLevel = num;
       speakOutput = "Next question: What is the patient's heart rate?";
     }else{
-      speakOutput = "Please enter a number from 1 to 100 for oxygen level";
+      speakOutput = "Please say an integer between 0 and 100 for blood oxygen percentage";
     }
 
     return response.speak(speakOutput)
@@ -121,12 +118,12 @@ const heartRateHandler = {
 
       let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
       let speakOutput;
-      if(isNumber(num)){
+      if(isNumber(num) && (num >= 40 && num <= 160)){ //out of realistic range, invalid
         attributes.stage++;
         attributes.heartRate = num;
-        speakOutput = "Next question: What is the patient's pain level on a scale of 0 to 10? 0 equals no pain, 10 equals severe pain";
+        speakOutput = "Next question: What is the patient's general pain level on a scale of 0 to 10? 0 is equivalent to no pain, while 10 is equivalent to severe pain.";
       }else{
-        speakOutput = "Please enter a number for heart rate";
+        speakOutput = "Please say a valid integer for heart rate.";
       }
 
       return response.speak(speakOutput)
@@ -150,12 +147,12 @@ const comfortLevelHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) && (num >= 1 && num <= 10) ){
+    if(isNumber(num) && (num >= 0 && num <= 10) ){ //out of realistic range, invalid
       attributes.stage++;
       attributes.comfortLevel = num;
-      speakOutput = "Next question: What is the patient's nausea level on a scale of 0 to 10? 0 equals no nausea, 10 equals severe vomitting";
+      speakOutput = "Next question: What is the patient's nausea level on a scale of 0 to 10? 0 is equivalent to no nausea, while 10 is equivalent to severe vomitting";
     }else{
-      speakOutput = "Please enter a number from 1 to 10 for comfort level";
+      speakOutput = "Please say an integer from 0 to 10 corresponding general pain level.";
     }
 
     return response.speak(speakOutput)
@@ -179,12 +176,12 @@ const nauseaHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) && (num >= 1 && num <= 10) ){
+    if(isNumber(num) && (num >= 0 && num <= 10) ){ //out of realistic range, invalid
       attributes.stage++;
       attributes.nausea = num;
-      speakOutput = "Next question: Is the patient experiencing pain associated with breathing? 0 equals no pain, 10 equals severe pain while breathing";
+      speakOutput = "Next question: What is the patient's level of pain associated with breathing on a scale of 0-10? 0 is equivalent to no pain, while 10 is equivalent to severe pain while breathing";
     }else{
-      speakOutput = "Please enter a number from 1 to 10 for nausea";
+      speakOutput = "Please say an integer from 0 to 10 corresponding to nausea.";
     }
 
     return response.speak(speakOutput)
@@ -208,12 +205,12 @@ const breathingHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) && (num >= 1 && num <= 10)){
+    if(isNumber(num) && (num >= 1 && num <= 10)){ //out of realistic range, invalid
       attributes.stage++;
       attributes.breathing = num;
-      speakOutput = "Final question: Is the patient experiencing vaginal bleeding? Responses include none, light, medium, or heavy.";
+      speakOutput = "Final question: How heavily is the patient experiencing vaginal bleeding? 0 is equivalent to no bleeding, while 10 is equivalent to heavy bleeding.";
     }else{
-      speakOutput = "Please enter a number from 1 to 10 for breathing";
+      speakOutput = "Please say an integer between 0 to 10 associated with pain while breathing.";
     }
 
     return response.speak(speakOutput)
@@ -237,34 +234,32 @@ const bleedingHandler = {
     //initializing attributes vars
     let num = handlerInput.requestEnvelope.request.intent.slots.mui.value;
     let speakOutput;
-    if(isNumber(num) && (num >= 1 && num <= 10)){
+    if(isNumber(num) && (num >= 1 && num <= 10)){ //out of realistic range, invalid
       attributes.stage++;
       attributes.bleeding = num;
     }else{
-      speakOutput = "Please enter a number from 1 to 10 for bleeding";
+      speakOutput = "Please say an integer between 0 and 10 associated with vaginal bleeding";
       return response.speak(speakOutput)
                     .reprompt(speakOutput)
                     .getResponse();
     }
 
-    ////////////
+    //************CALCULATIONS*****************/
+
     //calculation stage- check for null
     let shouldSkip = false;
     let arr = Object.keys(attributes);
     for(let i = 0; i < arr; i++){
       if(attributes.arr[i] == null){
         shouldSkip = true;
-        speakOutput = "User did not give all the proper metrics. Please try again";
+        speakOutput = "User did not give all proper metrics. Please restart and try again";
       }
     }
-    ////////////
-    /*if(!shouldSkip){
-        speakOutput = "You're cured!";
-    }*/
+
     int acc = 0; //accumulator for figuring out if nurse should be contacted
 
     //Calculation for Systolic Blood Pressure:
-    int x = attributes.bloodPressure;
+    int x = attributes.bloodPressureSys;
     switch(true) {
       case (x < 90):
         acc+=3;
@@ -280,7 +275,7 @@ const bleedingHandler = {
     }
     
     //Calculation for Diastolic Blood Pressure:
-    x = attributes.bloodPressureTwo;
+    x = attributes.bloodPressureDia;
     switch(true) {
       case (x < 60):
         acc+=3;
@@ -375,9 +370,10 @@ const bleedingHandler = {
         break;
     }
 
-    if(acc<2) speakOutput = "No concerns."
-    else if(acc == 2) speakOutput = "Text nurse.";
-    else speakOutput = "Call nurse.";
+    //OUTCOMES
+    if(acc<2) speakOutput = "The patient is of low concern. Immediate attention is not required."; 
+    else if(acc == 2) speakOutput = "The patient is of medium concern. Text nurse with symptoms and monitor closely."; //Future version would notify the nurse through WhatsApp to come to the patient when available
+    else speakOutput = "The patient is of high concern. Call nurse immediately for assistance."; //Future version would automatically call nurse with WhatsApp
 
     return response.speak(speakOutput)
                   .reprompt(speakOutput)
@@ -396,9 +392,6 @@ function isNumber(potentialNum){
   return true;
 
 }
-
-
-//////////////
 
 const HelpIntentHandler = {
     canHandle(handlerInput) {
